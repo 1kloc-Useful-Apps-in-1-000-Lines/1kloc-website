@@ -7,7 +7,8 @@ export default {
         primary: "#FF8C00", // Custom colors from your logo
         secondary: "#00FFCC", // Customize the colors as per logo
         accent: "#6200EA",
-        background: "#1A1A1A", // Example background color
+        background: "#1A1A1A", // Example dark background color
+        lightBackground: "#FFFFFF", // Add a light background for light mode if needed
       },
     },
   },

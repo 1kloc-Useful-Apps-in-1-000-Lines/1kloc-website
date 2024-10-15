@@ -7,9 +7,6 @@ const Navbar = () => {
     const { currentUser, logout } = useAuth(); // Get the current user and logout function from context
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Debug: Check if currentUser is correctly set after login
-    console.log("Current User in Navbar: ", currentUser);
-
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -23,9 +20,9 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-primary text-white dark:bg-gray-800 p-4 sticky top-0 z-50 transition-colors duration-300">
+        <nav className="bg-primary text-white dark:bg-background p-4 sticky top-0 z-50 transition-colors duration-300">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-xl font-bold dark:text-white">1Kloc</Link>
+                <Link to="/" className="text-xl font-bold dark:text-white text-accent">1Kloc</Link>
 
                 <button
                     className="md:hidden block text-white focus:outline-none"
@@ -36,6 +33,7 @@ const Navbar = () => {
                     </svg>
                 </button>
 
+                {/* Desktop Menu */}
                 <div className="hidden md:flex items-center space-x-4">
                     <Link to="/" className="hover:text-secondary dark:hover:text-yellow-300">Home</Link>
                     <Link to="/project-showcase" className="hover:text-secondary dark:hover:text-yellow-300">Project Showcase</Link>
@@ -56,26 +54,27 @@ const Navbar = () => {
                     <DarkModeToggle />
                 </div>
 
+                {/* Mobile Menu */}
                 <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} w-full mt-4`}>
-                    <Link to="/" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Home</Link>
-                    <Link to="/project-showcase" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Project Showcase</Link>
-                    <Link to="/contributors" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Contributors</Link>
+                    <Link to="/" className="block text-white dark:text-yellow-300 mb-2">Home</Link>
+                    <Link to="/project-showcase" className="block text-white dark:text-yellow-300 mb-2">Project Showcase</Link>
+                    <Link to="/contributors" className="block text-white dark:text-yellow-300 mb-2">Contributors</Link>
 
                     {currentUser ? (
                         <>
-                            <Link to="/submit-contributor" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Submit Contributor</Link>
-                            <Link to="/submit-contributor-info" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Submit Info</Link>
-                            <button onClick={handleLogout} className="block px-4 py-2 text-red-500 hover:bg-gray-700 dark:hover:bg-gray-600">
-                                Logout
-                            </button>
+                            <Link to="/submit-contributor" className="block text-white dark:text-yellow-300 mb-2">Submit Contributor</Link>
+                            <Link to="/submit-contributor-info" className="block text-white dark:text-yellow-300 mb-2">Submit Info</Link>
+                            <button onClick={handleLogout} className="block text-red-500 dark:text-red-300 mb-2">Logout</button>
                         </>
                     ) : (
                         <>
-                            <Link to="/login" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Login</Link>
-                            <Link to="/signup" className="block px-4 py-2 hover:bg-gray-700 dark:hover:bg-gray-600">Sign Up</Link>
+                            <Link to="/login" className="block text-white dark:text-yellow-300 mb-2">Login</Link>
+                            <Link to="/signup" className="block text-white dark:text-yellow-300 mb-2">Sign Up</Link>
                         </>
                     )}
-                    <DarkModeToggle />
+                    <div className="mt-4">
+                        <DarkModeToggle />
+                    </div>
                 </div>
             </div>
         </nav>

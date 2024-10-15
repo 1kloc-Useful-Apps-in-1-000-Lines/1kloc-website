@@ -28,9 +28,9 @@ const DarkModeToggle = () => {
     return (
         <button
             onClick={toggleDarkMode}
-            className="text-2xl p-2 rounded-full bg-gray-200 dark:bg-gray-800 transition-all duration-300"
+            className="text-2xl p-2 rounded-full bg-gray-200 dark:bg-background transition-all duration-300"
         >
-            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-gray-800 dark:text-gray-200" />}
+            {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-primary dark:text-white" />}
         </button>
     );
 };
