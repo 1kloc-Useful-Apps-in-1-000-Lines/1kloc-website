@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { db } from '../firebase/firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '../firebase/AuthProvider';
+import ContributorCard from '../components/ContributorCard'; // Reuse the card component for displaying projects
 
 const SubmitContributor = () => {
     const { currentUser } = useAuth();
@@ -12,12 +13,38 @@ const SubmitContributor = () => {
         gitHubLink: '',
         image: '',
     });
+    const [userProjects, setUserProjects] = useState([]); // State to hold user's projects
+
+    // Fetch the user's submitted projects
+    const fetchUserProjects = async () => {
+        if (!currentUser) return;
+
+        const q = query(
+            collection(db, 'contributors'),
+            where('moniker', '==', currentUser.moniker) // Get projects submitted by the current user
+        );
+        const querySnapshot = await getDocs(q);
+        const projects = querySnapshot.docs.map((doc) => doc.data());
+        setUserProjects(projects); // Set the projects into state
+    };
+
+    useEffect(() => {
+        fetchUserProjects(); // Fetch projects when component mounts
+    }, [currentUser]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!currentUser) return;
 
-        await addDoc(collection(db, 'contributors'), formData);
+        const projectData = {
+            ...formData,
+            moniker: currentUser.moniker, // Use current user's moniker
+        };
+
+        // Add new project to Firestore
+        await addDoc(collection(db, 'contributors'), projectData);
+
+        // Reset form
         setFormData({
             title: '',
             description: '',
@@ -25,6 +52,9 @@ const SubmitContributor = () => {
             gitHubLink: '',
             image: '',
         });
+
+        // Fetch the updated list of projects
+        fetchUserProjects();
     };
 
     if (!currentUser) {
@@ -95,6 +125,28 @@ const SubmitContributor = () => {
                     Submit Project
                 </button>
             </form>
+
+            {/* Display list of submitted projects */}
+            <div className="mt-8">
+                <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Submitted Projects</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                    {userProjects.length > 0 ? (
+                        userProjects.map((project, index) => (
+                            <ContributorCard
+                                key={index}
+                                title={project.title}
+                                description={project.description}
+                                liveLink={project.liveLink}
+                                gitHubLink={project.gitHubLink}
+                                image={project.image}
+                                moniker={project.moniker}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-gray-600 dark:text-gray-400">No projects submitted yet.</p>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

@@ -7,11 +7,11 @@ const SubmitContributorInfo = () => {
     const { currentUser } = useAuth();
     const [formData, setFormData] = useState({
         image: '',
-        moniker: '',
         realName: '',
         info: '',
         githubLink: '',
         websiteLink: '',
+        position: '', // New field for project position
     });
 
     const handleSubmit = async (e) => {
@@ -20,9 +20,10 @@ const SubmitContributorInfo = () => {
 
         const contributorData = {
             image: formData.image,
-            moniker: formData.moniker,
+            moniker: currentUser.moniker, // Use the user's moniker
             realName: formData.realName,
             info: formData.info,
+            position: formData.position, // Include position in the data
             links: [
                 { label: 'GitHub', url: formData.githubLink },
                 { label: 'Website', url: formData.websiteLink },
@@ -32,11 +33,11 @@ const SubmitContributorInfo = () => {
 
         setFormData({
             image: '',
-            moniker: '',
             realName: '',
             info: '',
             githubLink: '',
             websiteLink: '',
+            position: '', // Reset position field
         });
     };
 
@@ -61,17 +62,6 @@ const SubmitContributorInfo = () => {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block mb-2 text-primary dark:text-yellow-300">Moniker</label>
-                    <input
-                        type="text"
-                        placeholder="Enter moniker (e.g., CodeMaster OG)"
-                        value={formData.moniker}
-                        onChange={(e) => setFormData({ ...formData, moniker: e.target.value })}
-                        className="w-full border border-gray-300 dark:border-gray-600 rounded-md p-2 shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
-                    />
-                </div>
-
-                <div className="mb-4">
                     <label className="block mb-2 text-primary dark:text-yellow-300">Real Name</label>
                     <input
                         type="text"
@@ -91,6 +81,25 @@ const SubmitContributorInfo = () => {
                         className="w-full border border-gray-300 dark:border-gray-600 rounded-md p-2 shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
                         rows="4"
                     />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block mb-2 text-primary dark:text-yellow-300">Project Position</label>
+                    <select
+                        value={formData.position}
+                        onChange={(e) => setFormData({ ...formData, position: e.target.value })}
+                        className="w-full border border-gray-300 dark:border-gray-600 rounded-md p-2 shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
+                    >
+                        <option value="">Select Position</option>
+                        <option value="Maintainer">Maintainer</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Tester">Tester</option>
+                        <option value="Documentation Writer">Documentation Writer</option>
+                        <option value="Project Manager">Project Manager</option>
+                        <option value="Contributor">Contributor</option>
+                        <option value="Community Manager">Community Manager</option>
+                    </select>
                 </div>
 
                 <div className="mb-4">

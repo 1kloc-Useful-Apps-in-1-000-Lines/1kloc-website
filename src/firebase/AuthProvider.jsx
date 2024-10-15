@@ -1,55 +1,43 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebaseConfig';
 
-// Create the context for auth
 const AuthContext = createContext();
 
-// AuthProvider component to wrap around your app
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docRef = doc(db, 'users', user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setCurrentUser({ ...user, ...docSnap.data() });
+                } else {
+                    setCurrentUser(user);
+                }
+            } else {
+                setCurrentUser(null);
+            }
             setLoading(false);
         });
 
         return unsubscribe;
     }, []);
 
-    // Function to handle login
-    const login = (email, password) => {
-        return signInWithEmailAndPassword(auth, email, password);
-    };
-
-    // Function to handle sign up
-    const signup = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password);
-    };
-
-    // Function to handle logout
-    const logout = () => {
-        return signOut(auth);
-    };
-
-    // Values provided by AuthContext
-    const value = {
-        currentUser,
-        login,
-        signup,
-        logout,
-    };
+    const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
+    const signup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+    const logout = () => signOut(auth);
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={{ currentUser, login, signup, logout }}>
             {!loading && children}
         </AuthContext.Provider>
     );
 };
 
-// Custom hook to use auth context
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);

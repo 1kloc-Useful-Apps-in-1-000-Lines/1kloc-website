@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
-import { useAuth } from '../firebase/AuthProvider'; // Import the custom hook for auth
+import { useAuth } from '../firebase/AuthProvider';
 
 const Navbar = () => {
-    const { currentUser, logout } = useAuth(); // Get the current user and logout function from context
+    const { currentUser, logout } = useAuth();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
@@ -41,8 +41,7 @@ const Navbar = () => {
 
                     {currentUser ? (
                         <>
-                            <Link to="/submit-contributor" className="hover:text-secondary dark:hover:text-yellow-300">Submit Contributor</Link>
-                            <Link to="/submit-contributor-info" className="hover:text-secondary dark:hover:text-yellow-300">Submit Info</Link>
+                            <Link to="/dashboard" className="hover:text-secondary dark:hover:text-yellow-300">Dashboard</Link>
                             <button onClick={handleLogout} className="hover:text-red-500 dark:hover:text-red-300">Logout</button>
                         </>
                     ) : (
@@ -62,8 +61,7 @@ const Navbar = () => {
 
                     {currentUser ? (
                         <>
-                            <Link to="/submit-contributor" className="block text-white dark:text-yellow-300 mb-2">Submit Contributor</Link>
-                            <Link to="/submit-contributor-info" className="block text-white dark:text-yellow-300 mb-2">Submit Info</Link>
+                            <Link to="/dashboard" className="block text-white dark:text-yellow-300 mb-2">Dashboard</Link>
                             <button onClick={handleLogout} className="block text-red-500 dark:text-red-300 mb-2">Logout</button>
                         </>
                     ) : (

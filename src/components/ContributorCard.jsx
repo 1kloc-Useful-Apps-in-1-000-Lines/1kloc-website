@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContributorCard = ({ image, title, description, liveLink, gitHubLink }) => (
+const ContributorCard = ({ image, title, description, liveLink, gitHubLink, moniker }) => (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-900 shadow-lg transition-transform duration-300 transform hover:scale-105">
         <img
             src={image}
@@ -14,6 +14,7 @@ const ContributorCard = ({ image, title, description, liveLink, gitHubLink }) =>
         <p className="text-gray-600 dark:text-gray-400 mb-4">
             {description}
         </p>
+        <p className="italic text-gray-500 dark:text-gray-400">Submitted by: {moniker}</p>
         <div className="flex justify-between items-center mt-auto">
             <a
                 href={liveLink}

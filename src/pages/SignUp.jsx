@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // For redirecting
-import { useAuth } from '../firebase/AuthProvider'; // Use the auth context
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../firebase/AuthProvider';
+import { db } from '../firebase/firebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [moniker, setMoniker] = useState(''); // Added moniker state
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // For redirecting after signup
-    const { signup } = useAuth(); // Get signup function from auth context
+    const navigate = useNavigate();
+    const { signup } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,8 +19,13 @@ const SignUp = () => {
             return setError('Passwords do not match');
         }
         try {
-            await signup(email, password);
-            navigate('/'); // Redirect to home after successful signup
+            const userCredential = await signup(email, password);
+            const user = userCredential.user;
+
+            // Save user details to Firestore with moniker
+            await setDoc(doc(db, 'users', user.uid), { email, moniker });
+
+            navigate('/');
         } catch (error) {
             setError('Failed to create an account');
             console.error(error);
@@ -36,6 +44,16 @@ const SignUp = () => {
                         className="w-full p-2 border rounded"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-200">Moniker</label>
+                    <input
+                        type="text"
+                        className="w-full p-2 border rounded"
+                        value={moniker}
+                        onChange={(e) => setMoniker(e.target.value)}
                         required
                     />
                 </div>
