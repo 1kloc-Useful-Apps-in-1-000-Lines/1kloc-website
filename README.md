@@ -6,7 +6,7 @@ Explore, contribute, and showcase your coding skills!
 
 ## Documentation
 
-For complete documentation, visit our **[1Kloc Docs Site](https://your-docs-site-url.com)**.
+For complete documentation, visit our **[1Kloc Docs Site](http://localhost:3000)**.
 
 ---
 
@@ -17,3 +17,4 @@ For complete documentation, visit our **[1Kloc Docs Site](https://your-docs-site
 3. Submit a pull request with your project.
 
 Find detailed guidelines in the **documentation site**.
+
