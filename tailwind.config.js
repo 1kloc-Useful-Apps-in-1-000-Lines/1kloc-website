@@ -8,7 +8,7 @@ export default {
         secondary: "#00FFCC", // Customize the colors as per logo
         accent: "#6200EA",
         background: "#1A1A1A", // Example dark background color
-        lightBackground: "#FFFFFF", // Add a light background for light mode if needed
+        lightBackground: "#F5F5F5", // Add a light background for light mode if needed
       },
     },
   },
