@@ -127,7 +127,7 @@ const SubmitContributor = () => {
             </form>
 
             {/* Display list of submitted projects */}
-            <div className="mt-8">
+            {/* <div className="mt-8">
                 <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Submitted Projects</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
                     {userProjects.length > 0 ? (
@@ -146,7 +146,7 @@ const SubmitContributor = () => {
                         <p className="text-gray-600 dark:text-gray-400">No projects submitted yet.</p>
                     )}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

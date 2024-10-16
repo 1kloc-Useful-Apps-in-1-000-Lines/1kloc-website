@@ -65,7 +65,7 @@ const SubmitContributorInfo = () => {
                     <label className="block mb-2 text-primary dark:text-yellow-300">Real Name</label>
                     <input
                         type="text"
-                        placeholder="Enter your real name"
+                        placeholder="Enter your real name (optional)"
                         value={formData.realName}
                         onChange={(e) => setFormData({ ...formData, realName: e.target.value })}
                         className="w-full border border-gray-300 dark:border-gray-600 rounded-md p-2 shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-800 dark:text-white"
