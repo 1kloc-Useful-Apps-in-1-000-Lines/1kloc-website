@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '../firebase/AuthProvider';
-import ContributorCard from '../components/ContributorCard'; // Reuse the card component for displaying projects
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SubmitContributor = () => {
     const { currentUser } = useAuth();
+    const navigate = useNavigate(); // Initialize useNavigate
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -13,7 +14,7 @@ const SubmitContributor = () => {
         gitHubLink: '',
         image: '',
     });
-    const [userProjects, setUserProjects] = useState([]); // State to hold user's projects
+    const [userProjects, setUserProjects] = useState([]);
 
     // Fetch the user's submitted projects
     const fetchUserProjects = async () => {
@@ -21,15 +22,15 @@ const SubmitContributor = () => {
 
         const q = query(
             collection(db, 'contributors'),
-            where('moniker', '==', currentUser.moniker) // Get projects submitted by the current user
+            where('moniker', '==', currentUser.moniker)
         );
         const querySnapshot = await getDocs(q);
         const projects = querySnapshot.docs.map((doc) => doc.data());
-        setUserProjects(projects); // Set the projects into state
+        setUserProjects(projects);
     };
 
     useEffect(() => {
-        fetchUserProjects(); // Fetch projects when component mounts
+        fetchUserProjects();
     }, [currentUser]);
 
     const handleSubmit = async (e) => {
@@ -38,23 +39,26 @@ const SubmitContributor = () => {
 
         const projectData = {
             ...formData,
-            moniker: currentUser.moniker, // Use current user's moniker
+            moniker: currentUser.moniker,
         };
 
-        // Add new project to Firestore
-        await addDoc(collection(db, 'contributors'), projectData);
+        try {
+            await addDoc(collection(db, 'contributors'), projectData);
 
-        // Reset form
-        setFormData({
-            title: '',
-            description: '',
-            liveLink: '',
-            gitHubLink: '',
-            image: '',
-        });
+            // Reset form data
+            setFormData({
+                title: '',
+                description: '',
+                liveLink: '',
+                gitHubLink: '',
+                image: '',
+            });
 
-        // Fetch the updated list of projects
-        fetchUserProjects();
+            // Navigate back to dashboard after submission
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Failed to submit project:', error);
+        }
     };
 
     if (!currentUser) {
@@ -63,7 +67,10 @@ const SubmitContributor = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-background transition-colors duration-300">
-            <form onSubmit={handleSubmit} className="p-8 max-w-lg mx-auto shadow-lg rounded-md bg-white dark:bg-gray-900 transition-colors duration-300">
+            <form
+                onSubmit={handleSubmit}
+                className="p-8 max-w-lg mx-auto shadow-lg rounded-md bg-white dark:bg-gray-900 transition-colors duration-300"
+            >
                 <h2 className="text-2xl font-semibold mb-6 dark:text-white">Submit Your Project</h2>
 
                 <div className="mb-4">
@@ -121,32 +128,13 @@ const SubmitContributor = () => {
                     />
                 </div>
 
-                <button type="submit" className="w-full bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-secondary transition-colors">
+                <button
+                    type="submit"
+                    className="w-full bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-secondary transition-colors"
+                >
                     Submit Project
                 </button>
             </form>
-
-            {/* Display list of submitted projects */}
-            {/* <div className="mt-8">
-                <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Submitted Projects</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-                    {userProjects.length > 0 ? (
-                        userProjects.map((project, index) => (
-                            <ContributorCard
-                                key={index}
-                                title={project.title}
-                                description={project.description}
-                                liveLink={project.liveLink}
-                                gitHubLink={project.gitHubLink}
-                                image={project.image}
-                                moniker={project.moniker}
-                            />
-                        ))
-                    ) : (
-                        <p className="text-gray-600 dark:text-gray-400">No projects submitted yet.</p>
-                    )}
-                </div>
-            </div> */}
         </div>
     );
 };

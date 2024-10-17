@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { useAuth } from '../firebase/AuthProvider';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SubmitContributorInfo = () => {
     const { currentUser } = useAuth();
+    const navigate = useNavigate(); // Initialize useNavigate
     const [formData, setFormData] = useState({
         image: '',
         realName: '',
         info: '',
         githubLink: '',
         websiteLink: '',
-        position: '', // New field for project position
+        position: '',
     });
 
     const handleSubmit = async (e) => {
@@ -20,25 +22,30 @@ const SubmitContributorInfo = () => {
 
         const contributorData = {
             image: formData.image,
-            moniker: currentUser.moniker, // Use the user's moniker
+            moniker: currentUser.moniker,
             realName: formData.realName,
             info: formData.info,
-            position: formData.position, // Include position in the data
+            position: formData.position,
             links: [
                 { label: 'GitHub', url: formData.githubLink },
                 { label: 'Website', url: formData.websiteLink },
             ],
         };
-        await addDoc(collection(db, 'contributorsInfo'), contributorData);
 
-        setFormData({
-            image: '',
-            realName: '',
-            info: '',
-            githubLink: '',
-            websiteLink: '',
-            position: '', // Reset position field
-        });
+        try {
+            await addDoc(collection(db, 'contributorsInfo'), contributorData);
+            setFormData({
+                image: '',
+                realName: '',
+                info: '',
+                githubLink: '',
+                websiteLink: '',
+                position: '',
+            });
+            navigate('/dashboard'); // Redirect to dashboard after submission
+        } catch (error) {
+            console.error('Failed to submit contributor info:', error);
+        }
     };
 
     if (!currentUser) {
@@ -47,7 +54,10 @@ const SubmitContributorInfo = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-background transition-colors duration-300">
-            <form onSubmit={handleSubmit} className="p-8 max-w-lg mx-auto shadow-lg rounded-md bg-white dark:bg-gray-900 transition-colors duration-300">
+            <form
+                onSubmit={handleSubmit}
+                className="p-8 max-w-lg mx-auto shadow-lg rounded-md bg-white dark:bg-gray-900 transition-colors duration-300"
+            >
                 <h2 className="text-2xl font-semibold mb-6 dark:text-white">Submit Your Information</h2>
 
                 <div className="mb-4">
@@ -124,7 +134,10 @@ const SubmitContributorInfo = () => {
                     />
                 </div>
 
-                <button type="submit" className="w-full bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-secondary transition-colors mt-4">
+                <button
+                    type="submit"
+                    className="w-full bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-secondary transition-colors mt-4"
+                >
                     Submit Contributor Info
                 </button>
             </form>
