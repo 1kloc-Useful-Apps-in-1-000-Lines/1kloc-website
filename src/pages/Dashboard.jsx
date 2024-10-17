@@ -17,12 +17,13 @@ const Dashboard = () => {
     const [editingInfo, setEditingInfo] = useState(false);
 
     useEffect(() => {
-        fetchUserProjects();
-        fetchContributorInfo();
+        if (currentUser) {
+            fetchUserProjects();
+            fetchContributorInfo();
+        }
     }, [currentUser]);
 
     const fetchUserProjects = async () => {
-        if (!currentUser) return;
         const q = query(
             collection(db, 'contributors'),
             where('moniker', '==', currentUser.moniker)
@@ -33,7 +34,6 @@ const Dashboard = () => {
     };
 
     const fetchContributorInfo = async () => {
-        if (!currentUser) return;
         const q = query(
             collection(db, 'contributorsInfo'),
             where('moniker', '==', currentUser.moniker)
@@ -43,12 +43,11 @@ const Dashboard = () => {
         setContributorInfo(info);
     };
 
-    // Properly defined handleDeleteInfo function
     const handleDeleteInfo = async () => {
         if (!contributorInfo?.id) return;
         try {
             await deleteDoc(doc(db, 'contributorsInfo', contributorInfo.id));
-            setContributorInfo(null); // Clear the info after deletion
+            setContributorInfo(null); // Clear state to re-render dashboard
         } catch (error) {
             console.error('Failed to delete contributor info:', error);
         }
@@ -89,17 +88,19 @@ const Dashboard = () => {
                     </Link>
                 </div>
 
-                <div className="shadow-lg p-6 rounded-lg bg-white dark:bg-gray-800">
-                    <h2 className="text-xl font-semibold dark:text-yellow-300 mb-4">Submit Your Information</h2>
-                    <Link to="/submit-contributor-info" className="bg-primary text-white py-2 px-4 rounded-md">
-                        Submit Info
-                    </Link>
-                </div>
+                {!contributorInfo && ( // Conditionally render the info submission
+                    <div className="shadow-lg p-6 rounded-lg bg-white dark:bg-gray-800">
+                        <h2 className="text-xl font-semibold dark:text-yellow-300 mb-4">Submit Your Information</h2>
+                        <Link to="/submit-contributor-info" className="bg-primary text-white py-2 px-4 rounded-md">
+                            Submit Info
+                        </Link>
+                    </div>
+                )}
             </div>
 
-            <div className="mt-8">
-                <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Contributor Info</h3>
-                {contributorInfo && (
+            {contributorInfo && (
+                <div className="mt-8">
+                    <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Contributor Info</h3>
                     <div className="relative">
                         <ContributorInfoCard {...contributorInfo} />
                         <div className="absolute top-4 right-4 flex space-x-2">
@@ -117,8 +118,8 @@ const Dashboard = () => {
                             </button>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             <div className="mt-8">
                 <h3 className="text-xl font-semibold dark:text-yellow-300 mb-4">Your Submitted Projects</h3>
@@ -145,7 +146,6 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Modals */}
             <Modal isOpen={!!editingProject} onClose={() => setEditingProject(null)}>
                 <EditProjectForm
                     project={editingProject}
