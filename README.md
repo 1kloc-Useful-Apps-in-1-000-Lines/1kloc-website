@@ -12,9 +12,4 @@ For complete documentation, visit our **[1Kloc Docs Site](http://localhost:3000)
 
 ## Contribute to the Project
 
-1. Fork this repository.
-2. Create your project under 1,000 lines of code.
-3. Submit a pull request with your project.
-
-Find detailed guidelines in the **documentation site**.
-
+We are under construction and creating our docs to get things going!!! Hopefully we will have live version for testing for community soon !!!!!
