@@ -24,7 +24,8 @@ function App() {
           <Route path="/contributors" element={<Contributors />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/docs/:docName" element={<DocsPage />} /> {/* Docs Route */}
+          <Route path="/docs/:docName" element={<DocsPage />} />
+          <Route path="/docs/contributor-md/:contributorName" element={<DocsPage />} /> {/* Contributor Docs Route */}
           <Route
             path="/submit-contributor"
             element={

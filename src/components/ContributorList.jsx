@@ -9,7 +9,10 @@ const ContributorList = () => {
     useEffect(() => {
         const fetchContributors = async () => {
             const querySnapshot = await getDocs(collection(db, 'contributors'));
-            const contributorsData = querySnapshot.docs.map(doc => doc.data());
+            const contributorsData = querySnapshot.docs.map(doc => ({
+                ...doc.data(),
+                docsLink: doc.data().docsLink || '', // Handle missing docsLink gracefully
+            }));
             setContributors(contributorsData);
         };
 
@@ -22,7 +25,7 @@ const ContributorList = () => {
                 <ContributorCard
                     key={index}
                     {...contributor}
-                    moniker={contributor.moniker} // Ensure the moniker is passed down
+                    moniker={contributor.moniker}
                 />
             ))}
         </div>

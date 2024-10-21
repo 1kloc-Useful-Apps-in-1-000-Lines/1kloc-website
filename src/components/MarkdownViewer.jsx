@@ -2,19 +2,33 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 
+// Import markdown files
+const docs = import.meta.glob('/src/docs/*.md', { as: 'raw' });
+const contributorDocs = import.meta.glob('/src/docs/contributor-md/*.md', { as: 'raw' });
+
 const MarkdownViewer = () => {
-    const { docName } = useParams(); // Extract the document name from the route params
+    const { docName, contributorName } = useParams();
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        fetch(`/src/docs/${docName}.md`)
-            .then((res) => {
-                if (res.ok) return res.text();
-                throw new Error('Document not found');
-            })
-            .then((text) => setContent(text))
-            .catch((error) => setContent(error.message));
-    }, [docName]);
+        const loadDoc = async () => {
+            let filePath = `/src/docs/${docName}.md`;
+            if (contributorName) {
+                filePath = `/src/docs/contributor-md/${contributorName}.md`;
+            }
+
+            if (docs[filePath]) {
+                const text = await docs[filePath]();
+                setContent(text);
+            } else if (contributorDocs[filePath]) {
+                const text = await contributorDocs[filePath]();
+                setContent(text);
+            } else {
+                setContent('Document not found');
+            }
+        };
+        loadDoc();
+    }, [docName, contributorName]);
 
     return (
         <div className="min-h-screen bg-lightBackground dark:bg-background transition-colors duration-300">
