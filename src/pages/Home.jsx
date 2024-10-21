@@ -10,33 +10,29 @@ const Home = () => (
                     1Kloc - Useful Apps in 1,000 Lines of Code
                 </h1>
                 <p className="text-lg mb-6">
-                    Welcome to the 1Kloc project! Thank you for visiting our project ! This is an open-source initiative to build useful apps under 1,000 lines of code. Explore, contribute, and showcase your coding skills!
+                    Welcome to the 1Kloc project! This is an open-source initiative to build useful apps under 1,000 lines of code. Explore, contribute, and showcase your coding skills!
                 </p>
 
-                <h2 className="text-2xl font-semibold mb-2">We are under construction and creating our docs to get things going!!! Hopefully we will have live version for testing for community soon !!!!!</h2>
+                <h2 className="text-2xl font-semibold mb-2">Check Our Documentation</h2>
                 <p className="text-lg mb-6">
-                    For complete documentation, visit our{' '}
+                    Visit our{' '}
                     <a
-                        href="http://localhost:3000"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/docs/getting-started"
                         className="text-blue-400 hover:text-blue-500 hover:underline"
                     >
-                        1Kloc Docs Site
-                    </a>.
-
+                        1Kloc Documentation
+                    </a>
+                    .
                 </p>
-                <h2 className="text-2xl font-semibold mb-2">Contribute to the Project</h2>
 
+                <h2 className="text-2xl font-semibold mb-2">Contribute to the Project</h2>
                 <p>
                     Find detailed guidelines in the{' '}
                     <a
-                        href="http://localhost:3000"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/docs/contributing"
                         className="text-blue-400 hover:text-blue-500 hover:underline"
                     >
-                        documentation site
+                        Contributing Guide
                     </a>
                     .
                 </p>
