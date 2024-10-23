@@ -1,5 +1,5 @@
 import React from 'react';
-import ContributorList from '../components/ContributorList'; // Still using the ContributorList for project cards
+import ContributorList from '../components/ContributorList';
 
 const ProjectShowcase = () => {
     return (

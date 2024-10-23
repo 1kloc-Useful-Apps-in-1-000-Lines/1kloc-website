@@ -11,7 +11,7 @@ const ContributorList = () => {
             const querySnapshot = await getDocs(collection(db, 'contributors'));
             const contributorsData = querySnapshot.docs.map(doc => ({
                 ...doc.data(),
-                docsLink: doc.data().docsLink || '', // Handle missing docsLink gracefully
+
             }));
             setContributors(contributorsData);
         };

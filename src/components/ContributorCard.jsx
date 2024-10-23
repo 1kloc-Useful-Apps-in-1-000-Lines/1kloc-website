@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContributorCard = ({ image, title, description, liveLink, gitHubLink, docsLink, moniker }) => (
+const ContributorCard = ({ image, title, description, liveLink, gitHubLink, moniker }) => (
     <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 bg-white dark:bg-gray-900 shadow-lg transition-transform duration-300 transform hover:scale-105">
         {image ? (
             <img
@@ -42,18 +42,7 @@ const ContributorCard = ({ image, title, description, liveLink, gitHubLink, docs
                 <p className="text-gray-500 dark:text-gray-400 italic">No GitHub link available</p>
             )}
         </div>
-        {docsLink && (
-            <div className="mt-4">
-                <a
-                    href={docsLink}
-                    className="text-blue-500 dark:text-yellow-300 hover:text-blue-600 dark:hover:text-yellow-400 font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Documentation
-                </a>
-            </div>
-        )}
+
     </div>
 );
 

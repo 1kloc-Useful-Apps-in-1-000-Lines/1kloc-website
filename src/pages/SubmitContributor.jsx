@@ -13,7 +13,7 @@ const SubmitContributor = () => {
         liveLink: '',
         gitHubLink: '',
         image: '',
-        docsLink: '', // New field
+
     });
     const [userProjects, setUserProjects] = useState([]);
 
@@ -105,13 +105,7 @@ const SubmitContributor = () => {
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                     className="w-full border p-2 mb-4"
                 />
-                <input
-                    type="url"
-                    placeholder="Enter documentation link URL"
-                    value={formData.docsLink}
-                    onChange={(e) => setFormData({ ...formData, docsLink: e.target.value })}
-                    className="w-full border p-2 mb-4"
-                />
+
                 <button type="submit" className="w-full bg-primary text-white py-2 rounded-md">
                     Submit Project
                 </button>

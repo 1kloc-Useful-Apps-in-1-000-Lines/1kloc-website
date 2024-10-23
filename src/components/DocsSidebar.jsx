@@ -3,12 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 
 // Import all markdown files using Vite's import.meta.glob
 const docs = import.meta.glob('/src/docs/*.md');
-const contributorDocs = import.meta.glob('/src/docs/contributor-md/*.md');
+// const contributorDocs = import.meta.glob('/src/docs/contributor-md/*.md');
 
 const DocsSidebar = () => {
     const [docLinks, setDocLinks] = useState([]);
-    const [contributorLinks, setContributorLinks] = useState([]);
-    const [isCollapsed, setIsCollapsed] = useState(true);
+    // const [contributorLinks, setContributorLinks] = useState([]);
+    // const [isCollapsed, setIsCollapsed] = useState(true);
     const location = useLocation();
 
     useEffect(() => {
@@ -20,11 +20,11 @@ const DocsSidebar = () => {
             }));
         setDocLinks(regularDocs);
 
-        const contribDocs = Object.keys(contributorDocs).map((path) => ({
-            name: path.split('/').pop().replace('.md', ''),
-            path: `/docs/contributor-md/${path.split('/').pop().replace('.md', '')}`,
-        }));
-        setContributorLinks(contribDocs);
+        // const contribDocs = Object.keys(contributorDocs).map((path) => ({
+        //     name: path.split('/').pop().replace('.md', ''),
+        //     path: `/docs/contributor-md/${path.split('/').pop().replace('.md', '')}`,
+        // }));
+        // setContributorLinks(contribDocs);
     }, []);
 
     return (
@@ -56,7 +56,7 @@ const DocsSidebar = () => {
                     </li>
                 ))}
 
-                <li>
+                {/* <li>
                     <button
                         className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-secondary dark:hover:text-accent transition-colors duration-200"
                         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -78,7 +78,7 @@ const DocsSidebar = () => {
                             ))}
                         </ul>
                     )}
-                </li>
+                </li> */}
             </ul>
         </div>
     );

@@ -98,17 +98,7 @@ const Dashboard = () => {
                 )}
             </div>
 
-            <div className="mt-8">
-                <h3 className="text-xl font-semibold text-primary mb-4">Access Dokumintoor</h3>
-                <a
-                    href="http://localhost:5174/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary text-white py-2 px-4 rounded-md hover:bg-accent transition-colors duration-300"
-                >
-                    Open Dokumintoor (Dev)
-                </a>
-            </div>
+
 
 
             {contributorInfo && (
