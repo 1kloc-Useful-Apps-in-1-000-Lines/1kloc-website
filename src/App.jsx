@@ -8,7 +8,8 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import SubmitContributor from './pages/SubmitContributor';
 import SubmitContributorInfo from './pages/SubmitContributorInfo';
-import Dashboard from './pages/Dashboard'; // New dashboard component
+import Dashboard from './pages/Dashboard';
+import DocsPage from './pages/DocsPage';
 import { AuthProvider } from './firebase/AuthProvider';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -23,8 +24,8 @@ function App() {
           <Route path="/contributors" element={<Contributors />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-
-          {/* Protected routes */}
+          <Route path="/docs/:docName" element={<DocsPage />} />
+          <Route path="/docs/contributor-md/:contributorName" element={<DocsPage />} /> {/* Contributor Docs Route */}
           <Route
             path="/submit-contributor"
             element={

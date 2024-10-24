@@ -47,7 +47,7 @@ const Dashboard = () => {
         if (!contributorInfo?.id) return;
         try {
             await deleteDoc(doc(db, 'contributorsInfo', contributorInfo.id));
-            setContributorInfo(null); // Clear state to re-render dashboard
+            setContributorInfo(null);
         } catch (error) {
             console.error('Failed to delete contributor info:', error);
         }
@@ -88,7 +88,7 @@ const Dashboard = () => {
                     </Link>
                 </div>
 
-                {!contributorInfo && ( // Conditionally render the info submission
+                {!contributorInfo && (
                     <div className="shadow-lg p-6 rounded-lg bg-white dark:bg-gray-800">
                         <h2 className="text-xl font-semibold dark:text-yellow-300 mb-4">Submit Your Information</h2>
                         <Link to="/submit-contributor-info" className="bg-primary text-white py-2 px-4 rounded-md">
@@ -97,6 +97,9 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+
+
+
 
             {contributorInfo && (
                 <div className="mt-8">

@@ -7,19 +7,14 @@ const ContributorCard = ({ image, title, description, liveLink, gitHubLink, moni
                 src={image}
                 alt={title}
                 className="rounded-lg w-full h-56 object-cover mb-4"
-                style={{ objectFit: 'cover' }}
             />
         ) : (
             <div className="w-full h-56 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-lg mb-4">
                 <p className="text-gray-500 dark:text-gray-400 italic">No image provided</p>
             </div>
         )}
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-            {title}
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 mb-4">
-            {description}
-        </p>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-2">{title}</h2>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{description}</p>
         <p className="italic text-gray-500 dark:text-gray-400">Submitted by: {moniker}</p>
         <div className="flex justify-between items-center mt-auto">
             {liveLink ? (
@@ -47,6 +42,7 @@ const ContributorCard = ({ image, title, description, liveLink, gitHubLink, moni
                 <p className="text-gray-500 dark:text-gray-400 italic">No GitHub link available</p>
             )}
         </div>
+
     </div>
 );
 

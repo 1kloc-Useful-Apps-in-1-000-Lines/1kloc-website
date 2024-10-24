@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { db } from '../firebase/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { useAuth } from '../firebase/AuthProvider';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const SubmitContributorInfo = () => {
     const { currentUser } = useAuth();
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         image: '',
         realName: '',

@@ -8,7 +8,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [moniker, setMoniker] = useState(''); // Added moniker state
+    const [moniker, setMoniker] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { signup } = useAuth();
@@ -22,7 +22,6 @@ const SignUp = () => {
             const userCredential = await signup(email, password);
             const user = userCredential.user;
 
-            // Save user details to Firestore with moniker
             await setDoc(doc(db, 'users', user.uid), { email, moniker });
 
             navigate('/');

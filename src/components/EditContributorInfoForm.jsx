@@ -1,4 +1,3 @@
-// src/components/EditContributorInfoForm.js
 import React, { useState } from 'react';
 
 const EditContributorInfoForm = ({ info, onSave, onClose }) => {
