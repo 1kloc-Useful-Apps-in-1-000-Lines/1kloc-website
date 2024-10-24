@@ -4,11 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#FF8C00", // Custom colors from your logo
-        secondary: "#00FFCC", // Customize the colors as per logo
-        accent: "#6200EA",
-        background: "#1A1A1A", // Example dark background color
-        lightBackground: "#F5F5F5", // Add a light background for light mode if needed
+        primary: "#FF5722", // A vibrant orange-red for better contrast
+        secondary: "#00B8D9", // A calmer cyan to balance with primary
+        accent: "#9C27B0", // A bright purple for highlights
+        background: "#121212", // Deep black background for dark mode
+        lightBackground: "#FAFAFA", // Lighter background for light mode
+        textPrimary: "#ECEFF1", // Light text for dark mode
+        textSecondary: "#1C1C1C", // Dark text for light mode
+        buttonBg: "#424242", // Subtle dark button background
+        buttonBgHover: "#616161", // Hover color for better feedback
       },
     },
   },
