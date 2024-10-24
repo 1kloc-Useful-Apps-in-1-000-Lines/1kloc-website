@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 // Import all markdown files using Vite's import.meta.glob
 const docs = import.meta.glob('/src/docs/*.md');
-// const contributorDocs = import.meta.glob('/src/docs/contributor-md/*.md');
+
 
 const DocsSidebar = () => {
     const [docLinks, setDocLinks] = useState([]);
-    // const [contributorLinks, setContributorLinks] = useState([]);
-    // const [isCollapsed, setIsCollapsed] = useState(true);
     const location = useLocation();
 
     useEffect(() => {
@@ -20,11 +17,8 @@ const DocsSidebar = () => {
             }));
         setDocLinks(regularDocs);
 
-        // const contribDocs = Object.keys(contributorDocs).map((path) => ({
-        //     name: path.split('/').pop().replace('.md', ''),
-        //     path: `/docs/contributor-md/${path.split('/').pop().replace('.md', '')}`,
-        // }));
-        // setContributorLinks(contribDocs);
+
+
     }, []);
 
     return (
@@ -56,29 +50,7 @@ const DocsSidebar = () => {
                     </li>
                 ))}
 
-                {/* <li>
-                    <button
-                        className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-secondary dark:hover:text-accent transition-colors duration-200"
-                        onClick={() => setIsCollapsed(!isCollapsed)}
-                    >
-                        {isCollapsed ? '▶' : '▼'} Contributor Projects
-                    </button>
-                    {!isCollapsed && (
-                        <ul className="mt-4 space-y-4 pl-4">
-                            {contributorLinks.map((link) => (
-                                <li key={link.name}>
-                                    <Link
-                                        to={link.path}
-                                        className={`block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-secondary dark:hover:text-accent transition-colors duration-200 ${location.pathname === link.path ? 'text-accent' : ''
-                                            }`}
-                                    >
-                                        {link.name.replace('-', ' ').toUpperCase()}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </li> */}
+
             </ul>
         </div>
     );

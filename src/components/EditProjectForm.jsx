@@ -1,4 +1,3 @@
-// src/components/EditProjectForm.js
 import React, { useState } from 'react';
 
 const EditProjectForm = ({ project, onSave, onClose }) => {
